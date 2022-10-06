@@ -1,19 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.IO;
 using Microsoft.Win32;
-using System.Data;
 
 namespace PasswordStats
 {
@@ -31,13 +19,9 @@ namespace PasswordStats
                 "Your input file needs to be created with:\n" +
                 "\"hashcat -m <your cracking option> <your hash file> --show --username\"";
         }
-
         
         private void SelectFile_Click(object sender, RoutedEventArgs e)
         {
-            
-            bool begin_read_data = false;
-
             // Array to store the length of the passwords
             int[] pw_length = new int[20];
             /*
@@ -165,7 +149,6 @@ namespace PasswordStats
                 Output.Text = "Select the file with your hashcat output first";
             }            
         }
-       
 
         private void Close_Click(object sender, RoutedEventArgs e)
         {
@@ -184,6 +167,5 @@ namespace PasswordStats
             string output = "filetype: " + new_file.PasswordFileType.ToString() + " - filename: " + new_file.Pwfile.ToString();
             MessageBox.Show(output);
         }
-
     }
 }
