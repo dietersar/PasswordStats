@@ -2,6 +2,9 @@
 using System.Windows;
 using System.IO;
 using Microsoft.Win32;
+using System.Collections.Generic;
+using System.Collections;
+using System.Linq;
 
 namespace PasswordStats
 {
@@ -11,6 +14,7 @@ namespace PasswordStats
     public partial class Window1 : Window
     {
         string pwfile = "";
+        private SortedDictionary<string, int> CountTheOccurrences = new SortedDictionary<string, int>();
 
         public Window1()
         {
@@ -113,6 +117,10 @@ namespace PasswordStats
                         if (content[2] && content[3]) other_info[2] = other_info[2] + 1;
 
                         count_pass++;
+
+                        // Counting occurances of each password
+                        CountTheOccurrences.TryGetValue(pwinfo.Password, out int count);
+                        CountTheOccurrences[pwinfo.Password] = count + 1;
                     }
                     else
                     {
@@ -140,6 +148,17 @@ namespace PasswordStats
                 output_text = output_text + "Passwords of letters, numbers & symbols :\t" + other_info[5].ToString() + "\n";
 
                 output_text = output_text + "Uncracked passwords :\t" + uncracked.ToString() + "\n";
+
+                // get sorted list of password occurances
+                var sortedElements = from pw in CountTheOccurrences
+                                     orderby pw.Value descending
+                                     select pw;
+                var top10passwords = sortedElements.Take(10);
+                output_text = output_text + "\nTop 10 of most used passwords :\n";
+                foreach (var element in top10passwords)
+                {
+                    output_text = output_text + element.Key.ToString() + " : \t" + element.Value.ToString() + "\n";
+                }
 
                 Output.Text = output_text;
                 _read_file.Dispose();
