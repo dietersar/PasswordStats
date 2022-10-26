@@ -11,3 +11,5 @@ The tool analyses the length, as well as how the password is constructed:
 * only numbers
 * letters & numbers
 * also special chars used
+
+Top 10 most used passwords is shown.
